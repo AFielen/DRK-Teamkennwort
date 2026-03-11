@@ -1,6 +1,6 @@
-# 🏥 DRK App Template
+# 🔐 DRK Kennwort
 
-**Starter-Template für alle DRK-Digitalisierungstools.**
+**Sicheres Passwort-Management für DRK-Teams.**
 
 Open Source · Kostenlos · DSGVO-konform
 
@@ -8,80 +8,108 @@ Open Source · Kostenlos · DSGVO-konform
 
 ## Was ist das?
 
-Dieses Repository ist der Ausgangspunkt für neue Web-Apps im DRK-Kontext. Es enthält das einheitliche Design-System, die Projektstruktur und alle Konventionen – damit jede neue App vom ersten Moment an wie eine DRK-App aussieht und funktioniert.
+DRK Kennwort ist eine mandantenfähige Passwort-Verwaltung für DRK-Kreisverbände. Teams teilen sich einen verschlüsselten Tresor mit eigenem Master-Passwort – wie KeePass, aber als Web-Anwendung. Zero-Knowledge-Architektur: Der Server sieht nie ein Klartext-Passwort.
 
-## ✨ Features
+## Features
 
-* **DRK-Header + Footer** — Rote Leiste mit Logo, Hilfe- und Spenden-Icons
-* **Box-basiertes Layout** — Konsistente Karten-Optik auf grauem Hintergrund
-* **Zweisprachig (DE/EN)** — i18n-System von Tag 1
-* **Pflichtseiten** — Impressum, Datenschutz, Hilfe, Spenden fertig eingebaut
-* **CLAUDE.md** — Claude Code kennt sofort alle Konventionen
-* **Flexibles Deployment** — Statisch (GitHub Pages) oder Server (Docker)
-* **DSGVO-konform** — Keine Cookies, keine externen Dienste, keine Tracker
+### Web-App
+- **Zero-Knowledge-Verschlüsselung** — AES-256-GCM im Browser, Server speichert nur Ciphertext
+- **Zwei-Türen-Prinzip** — Account-Login (Passkey/TOTP) + Team-Master-Passwort
+- **Mandantenfähig** — Strikt isolierte Kreisverbände via PostgreSQL Row-Level Security
+- **Team-Tresore** — Jedes Team hat eigenen Tresor mit eigenem Master-Passwort
+- **Passkey-Unterstützung** — Moderne, passwortlose Anmeldung
+- **TOTP (2FA)** — Zeitbasierte Einmalcodes als Alternative
+- **Audit-Log** — Lückenlose Protokollierung aller Zugriffe
+- **Recovery-Key** — Notfall-Wiederherstellung bei verlorenem Master-Passwort
+- **Zweisprachig (DE/EN)** — Internationalisierung von Tag 1
 
-## 🚀 Schnellstart
+### REST-API
+- Team-Verwaltung, Tresor-CRUD, Einladungssystem
+- Mandanten-isolierte Endpunkte
+- Session-basierte Authentifizierung
 
-### Neues Projekt erstellen
+## Installation
 
-1. Auf GitHub: **"Use this template"** → "Create a new repository"
-2. Repository-Name wählen (z.B. `drk-rundlauf`, `drk-protokoll`)
-3. Klonen und loslegen:
+### Docker (empfohlen)
 
 ```bash
-git clone https://github.com/AFielen/[neuer-name].git
-cd [neuer-name]
+git clone https://github.com/AFielen/DRK-Teamkennwort.git
+cd DRK-Teamkennwort
+cp .env.example .env
+# .env anpassen (DB_PASSWORD, SESSION_SECRET etc.)
+docker compose up -d
+```
+
+### Lokal entwickeln
+
+```bash
+git clone https://github.com/AFielen/DRK-Teamkennwort.git
+cd DRK-Teamkennwort
 npm install
 npm run dev
 ```
 
-### Mit Claude Code entwickeln
+## Tech-Stack
 
-```bash
-# Im Projektverzeichnis – Claude liest CLAUDE.md automatisch:
-claude
+| Technologie | Version | Zweck |
+|---|---|---|
+| [Next.js](https://nextjs.org/) | 16 | App-Framework (App Router) |
+| [React](https://react.dev/) | 19 | UI-Library |
+| [TypeScript](https://www.typescriptlang.org/) | strict | Typisierung |
+| [Tailwind CSS](https://tailwindcss.com/) | 4 | Styling |
+| [Drizzle ORM](https://orm.drizzle.team/) | - | Datenbank-ORM |
+| [PostgreSQL](https://www.postgresql.org/) | 16 | Datenbank |
+| [SimpleWebAuthn](https://simplewebauthn.dev/) | - | Passkey-Authentifizierung |
+
+## Projektstruktur
+
+```
+DRK-Teamkennwort/
+├── app/
+│   ├── layout.tsx              # Root-Layout: DRK-Header + Footer
+│   ├── page.tsx                # Startseite
+│   ├── globals.css             # DRK CSS-Variablen + Basis-Styles
+│   ├── not-found.tsx           # Custom 404
+│   ├── impressum/page.tsx      # Impressum (Pflicht)
+│   ├── datenschutz/page.tsx    # Datenschutz (Pflicht)
+│   ├── hilfe/page.tsx          # Hilfe & FAQ (Pflicht)
+│   ├── spenden/page.tsx        # Spenden (Pflicht)
+│   └── api/                    # API-Routes
+├── components/                 # React-Komponenten
+├── lib/
+│   ├── types.ts                # TypeScript-Typen
+│   ├── i18n.ts                 # Übersetzungen (DE/EN)
+│   └── version.ts              # Versionierung
+├── public/                     # Statische Assets
+├── Dockerfile                  # Multi-Stage Docker Build
+├── docker-compose.yml          # App + PostgreSQL
+├── CLAUDE.md                   # Konventionen für Claude Code
+├── INFRASTRUCTURE.md           # DSGVO-Goldstandard Infrastruktur
+└── DRK-KENNWORT-ROADMAP.md     # Entwicklungs-Roadmap
 ```
 
-### Anpassen
+## Datenschutz & Sicherheit
 
-1. **Suche & Ersetze** `APP_TITEL` → tatsächlicher App-Name
-2. **Suche & Ersetze** `APP_BESCHREIBUNG` → Beschreibung
-3. **Logo-Dateien** in `public/` ergänzen (logo.svg, logo.png, favicon.svg)
-4. **`lib/i18n.ts`** mit app-spezifischen Übersetzungen erweitern
-5. **`next.config.ts`** → `'export'` (statisch) oder `'standalone'` (Server)
-6. **README.md** nach dem Pflicht-Format anpassen (siehe CLAUDE.md)
+- **Zero-Knowledge** — Passwörter werden clientseitig verschlüsselt, Server sieht nur Ciphertext
+- **Hosting in Deutschland** — Hetzner Cloud, kein US-Anbieter in der Kette
+- **Keine Cookies** — Session-basiert ohne Cookies
+- **Keine Tracker** — Keine Analytics, keine externen Dienste
+- **Open Source** — Vollständig transparenter Quellcode
+- **E-Mail über Mailjet (EU)** — SMTP-Relay, Server in Frankreich, AVV vorhanden
 
-## 🛠️ Tech-Stack
+## Beitragen
 
-* [Next.js 16](https://nextjs.org/) + [React 19](https://react.dev/)
-* [TypeScript](https://www.typescriptlang.org/)
-* [Tailwind CSS 4](https://tailwindcss.com/)
+1. Fork erstellen
+2. Feature-Branch anlegen (`git checkout -b feat/mein-feature`)
+3. Änderungen committen (`git commit -m 'feat: Beschreibung'`)
+4. Branch pushen (`git push origin feat/mein-feature`)
+5. Pull Request erstellen
 
-## 📐 Enthalten
-
-| Datei | Zweck |
-|---|---|
-| `CLAUDE.md` | Konventionen für Claude Code |
-| `app/layout.tsx` | DRK-Header (❓ Hilfe + ❤️ Spenden) + Footer |
-| `app/globals.css` | DRK-Farben, Box-Klassen, Button-Styles |
-| `app/page.tsx` | Beispiel-Startseite |
-| `app/impressum/` | Impressum |
-| `app/datenschutz/` | Datenschutzerklärung |
-| `app/hilfe/` | Hilfe & FAQ |
-| `app/spenden/` | Spenden-/Unterstützungsseite |
-| `app/not-found.tsx` | Custom 404 |
-| `lib/i18n.ts` | Zweisprachigkeit DE/EN |
-
-## 🔗 Referenz-Apps
-
-* [abstimmung](https://github.com/AFielen/abstimmung) — Digitales Abstimmungssystem
-* [auskunft](https://github.com/AFielen/auskunft) — Digitale Compliance-Selbstauskunft
-
-## 📄 Lizenz
+## Lizenz
 
 MIT — Frei verwendbar für alle DRK-Gliederungen und darüber hinaus.
 
-## 🏥 Über
+## Über
 
 Ein Projekt des [DRK Kreisverband StädteRegion Aachen e.V.](https://www.drk-aachen.de/)
 

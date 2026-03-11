@@ -7,7 +7,7 @@ export default function Hilfe() {
         <div className="drk-card">
           <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>Hilfe & Anleitung</h2>
           <p style={{ color: 'var(--text-light)' }}>
-            Hier finden Sie Antworten auf häufige Fragen und eine Anleitung zur Nutzung.
+            Hier finden Sie Antworten auf häufige Fragen zur sicheren Passwort-Verwaltung mit DRK Kennwort.
           </p>
         </div>
 
@@ -17,30 +17,69 @@ export default function Hilfe() {
           <div className="space-y-4">
             <details className="group">
               <summary className="cursor-pointer font-semibold hover:text-[#e30613] transition-colors" style={{ color: 'var(--text)' }}>
-                Was ist diese Anwendung?
+                Was ist DRK Kennwort?
               </summary>
               <p className="mt-2 text-sm pl-4" style={{ color: 'var(--text-light)' }}>
-                APP_BESCHREIBUNG
+                DRK Kennwort ist eine sichere, mandantenfähige Passwort-Verwaltung für DRK-Teams.
+                Jedes Team hat einen eigenen verschlüsselten Tresor, der mit einem gemeinsamen
+                Master-Passwort geschützt ist &ndash; ähnlich wie KeePass, aber als Web-Anwendung.
               </p>
             </details>
 
             <details className="group">
               <summary className="cursor-pointer font-semibold hover:text-[#e30613] transition-colors" style={{ color: 'var(--text)' }}>
-                Werden meine Daten gespeichert?
+                Wie funktioniert die Verschlüsselung?
               </summary>
               <p className="mt-2 text-sm pl-4" style={{ color: 'var(--text-light)' }}>
-                Nein. Diese Anwendung speichert keine Daten auf einem Server. Alle Eingaben
-                verbleiben in Ihrem Browser und können jederzeit gelöscht werden.
+                Alle Passwörter werden lokal in Ihrem Browser mit AES-256-GCM verschlüsselt,
+                bevor sie an den Server gesendet werden. Der Schlüssel wird aus dem Team-Master-Passwort
+                abgeleitet (PBKDF2 + HKDF). Der Server sieht nie ein Klartext-Passwort
+                (Zero-Knowledge-Prinzip).
               </p>
             </details>
 
             <details className="group">
               <summary className="cursor-pointer font-semibold hover:text-[#e30613] transition-colors" style={{ color: 'var(--text)' }}>
-                Brauche ich einen Account?
+                Was passiert, wenn ich mein Master-Passwort vergesse?
               </summary>
               <p className="mt-2 text-sm pl-4" style={{ color: 'var(--text-light)' }}>
-                Nein. Die Anwendung funktioniert ohne Registrierung, ohne Login und ohne
-                persönliche Daten.
+                Das Master-Passwort wird nirgendwo gespeichert. Bei Verlust kann der Tresor
+                nur über einen Recovery-Key wiederhergestellt werden, der bei der Team-Erstellung
+                erzeugt wird. Bewahren Sie diesen sicher auf!
+              </p>
+            </details>
+
+            <details className="group">
+              <summary className="cursor-pointer font-semibold hover:text-[#e30613] transition-colors" style={{ color: 'var(--text)' }}>
+                Wer kann meine Passwörter sehen?
+              </summary>
+              <p className="mt-2 text-sm pl-4" style={{ color: 'var(--text-light)' }}>
+                Nur Team-Mitglieder, die das Team-Master-Passwort kennen, können den Tresor
+                entschlüsseln. Weder der Server-Betreiber noch Administratoren haben Zugriff
+                auf Klartext-Passwörter.
+              </p>
+            </details>
+
+            <details className="group">
+              <summary className="cursor-pointer font-semibold hover:text-[#e30613] transition-colors" style={{ color: 'var(--text)' }}>
+                Was sind Passkeys und TOTP?
+              </summary>
+              <p className="mt-2 text-sm pl-4" style={{ color: 'var(--text-light)' }}>
+                Passkeys sind eine moderne, passwortlose Anmeldemethode, die biometrische
+                Daten oder Sicherheitsschlüssel nutzt. TOTP (Time-based One-Time Password)
+                generiert zeitbasierte Einmalcodes, z.B. über eine Authenticator-App.
+                Beides dient der sicheren Anmeldung am Account (Tür 1).
+              </p>
+            </details>
+
+            <details className="group">
+              <summary className="cursor-pointer font-semibold hover:text-[#e30613] transition-colors" style={{ color: 'var(--text)' }}>
+                Ist die Anwendung DSGVO-konform?
+              </summary>
+              <p className="mt-2 text-sm pl-4" style={{ color: 'var(--text-light)' }}>
+                Ja. DRK Kennwort wird auf Hetzner-Servern in Deutschland gehostet.
+                Es werden keine US-Dienste, keine Cookies und keine Tracking-Tools
+                eingesetzt. Der gesamte Quellcode ist Open Source und überprüfbar.
               </p>
             </details>
           </div>
@@ -50,7 +89,7 @@ export default function Hilfe() {
         <div className="drk-card border-l-4" style={{ borderLeftColor: 'var(--drk)' }}>
           <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--text)' }}>Fragen, Feedback oder Fehler gefunden?</h3>
           <p className="text-sm" style={{ color: 'var(--text-light)' }}>
-            Wenden Sie sich an den DRK Kreisverband StädteRegion Aachen e.V. — auch bei technischen Fehlern, Bugs oder inhaltlichen Unklarheiten:<br />
+            Wenden Sie sich an den DRK Kreisverband StädteRegion Aachen e.V. &ndash; auch bei technischen Fehlern, Bugs oder inhaltlichen Unklarheiten:<br />
             <a href="mailto:digitalisierung@drk-aachen.de" style={{ color: 'var(--drk)' }} className="hover:underline">
               digitalisierung@drk-aachen.de
             </a>

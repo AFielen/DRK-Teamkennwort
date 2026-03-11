@@ -3,8 +3,8 @@ import Link from 'next/link';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'DRK APP_TITEL',
-  description: 'APP_BESCHREIBUNG – DRK Kreisverband StädteRegion Aachen e.V.',
+  title: 'DRK Kennwort – Sicheres Passwort-Management für Teams',
+  description: 'Sicheres, mandantenfähiges Passwort-Management für DRK-Teams. Zero-Knowledge-Verschlüsselung, DSGVO-konform.',
   icons: { icon: '/favicon.svg' },
 };
 
@@ -50,9 +50,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/" className="flex items-center gap-3">
             <img src="/logo.png" alt="DRK Logo" width={42} height={42} />
             <div>
-              <h1 className="text-[1.4rem] font-bold leading-tight">APP_TITEL</h1>
-              <div className="text-[0.8rem] opacity-85 hidden sm:block">APP_UNTERTITEL</div>
-              <div className="text-[0.8rem] opacity-85 sm:hidden">APP_UNTERTITEL_KURZ</div>
+              <h1 className="text-[1.4rem] font-bold leading-tight">DRK Kennwort</h1>
+              <div className="text-[0.8rem] opacity-85 hidden sm:block">Sicheres Passwort-Management für Teams</div>
+              <div className="text-[0.8rem] opacity-85 sm:hidden">Passwort-Management</div>
             </div>
           </Link>
 
