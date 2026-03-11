@@ -40,22 +40,24 @@ drk-kennwort.de
 
 ## Phase 0 — Fundament (Woche 1–2)
 
-### 0.1 Projekt aus Template erstellen + Anpassen
+### 0.1 Projekt einrichten (Repo existiert bereits)
 
 ```
-Prompt: "Klone das DRK App Template von github.com/AFielen/drk-app-template.git.
-Lies CLAUDE.md und INFRASTRUCTURE.md vollständig — das sind die verbindlichen Konventionen.
-Lies die CSS-Styles aus github.com/AFielen/NIS2-Audit.git als Design-Referenz.
+Prompt: "Das Repo github.com/AFielen/drk-kennwort existiert bereits. Arbeite direkt darin.
 
-Erstelle daraus das Projekt 'drk-kennwort':
-- GitHub Repo: github.com/AFielen/drk-kennwort
+Klone diese Repos nach /tmp als REFERENZ (nicht kopieren, nur lesen):
+- github.com/AFielen/drk-app-template.git → lies CLAUDE.md + INFRASTRUCTURE.md (verbindliche Konventionen)
+- github.com/AFielen/NIS2-Audit.git → lies globals.css als Design-Referenz für DRK-Farben + Komponenten
+- github.com/AFielen/kidood → lies die Auth-Implementierung (Passkey + TOTP Pattern)
+
+Richte das Next.js 16 Projekt ein (App Router, TypeScript strict, Tailwind CSS 4).
 - Deployment-Variante B (Server): output: 'standalone' in next.config.ts
 - Docker + docker-compose Setup gemäß INFRASTRUCTURE.md Variante B
 
-Anpassungen am Template:
+Erstelle Header, Footer, Layout und Pflichtseiten exakt nach CLAUDE.md-Konventionen:
 - APP_TITEL → 'DRK Kennwort'
 - APP_UNTERTITEL → 'Sicheres Passwort-Management für Teams'
-- Alle Pflichtseiten anpassen (Impressum, Datenschutz, Hilfe, Spenden)
+- Alle Pflichtseiten (Impressum, Datenschutz, Hilfe, Spenden)
 - Datenschutz: Hetzner, Mailjet als Verarbeiter auflisten
 - i18n: DE + EN gemäß Template-Konvention (lib/i18n.ts)
 
